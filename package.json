@@ -13,7 +13,8 @@
     "build": "tsup src/index.ts --minify",
     "test": "jest --silent",
     "test:coverage": "jest --coverage --silent",
-    "sync": "tsx src/util/refreshCommands.ts"
+    "sync": "tsx src/util/syncCommands.ts",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +41,7 @@
     "@types/node": "^20",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.4",
     "tsup": "^8.1.0",

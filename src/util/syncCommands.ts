@@ -10,4 +10,4 @@ export const syncCommands = async (inators: Inator[], guildId: string | undefine
     await Promise.all(inators.map(async ({ commands, config }) => await deployCommands({ commands, config, guildId })));
 }
 
-syncCommands(bots, process.env.DEV_GUILD_ID);
+syncCommands(bots, process.argv[2] ?? process.env.DEV_GUILD_ID);
