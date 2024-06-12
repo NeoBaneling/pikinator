@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { Inator } from '../../common/types';
-import { getConfig } from '../../util/get-config';
-import { commands } from './commands';
+import { getConfig } from '../../util/getConfig';
+import { ping } from './commands';
 
 const onMessage = async (message: Message) => {
     if (message.content === 'pika') {
@@ -9,5 +9,5 @@ const onMessage = async (message: Message) => {
     }
 }
 
-const bot: Inator = { commands, config: getConfig('pikinator'), onMessage };
+const bot: Inator = { commands: { ping }, config: getConfig('pikinator'), onMessage };
 export default bot
