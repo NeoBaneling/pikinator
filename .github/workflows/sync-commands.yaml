@@ -10,6 +10,12 @@ on:
 jobs:
   sync-commands:
     runs-on: ubuntu-latest
+    env:
+      DEV_GUILD_ID: ${{ secrets.DEV_GUILD_ID }}
+      ATARINATOR_CLIENT_ID: ${{ secrets.ATARINATOR_CLIENT_ID }}
+      ATARINATOR_TOKEN: ${{ secrets.ATARINATOR_TOKEN }}
+      PIKINATOR_CLIENT_ID: ${{ secrets.PIKINATOR_CLIENT_ID }}
+      PIKINATOR_TOKEN: ${{ secrets.PIKINATOR_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up node
