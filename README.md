@@ -63,7 +63,29 @@ This short guide will walk you through all steps necessary to start developing w
 - Select the Bot settings on the left hand side
 - Select **Reset Token** and copy the generated token, storing it in a safe place
 - Enable the **MESSAGE CONTENT INTENT** Priveleged Gateway Intent for the bot
-- Select the OAuth2 tab and enable the "bot" scope
+- Select the OAuth2 tab and enable the **bots** scope
+- Enable the following bot permissions:
+    - GENERAL
+        - Change Nickname
+        - Read Messages/ View Channels
+    - TEXT
+        - Send Messages
+        - Create Public Threads
+        - Send Messages in Threads
+        - Send TTS Messages
+        - Embed Links
+        - Attach Files
+        - Read Message History
+        - Mention Everyone
+        - Add Reactions
+        - Use Slash Commaands
+        - Use Embedded Activities
+    - VOICE
+        - Connect
+        - Speak
+        - Use Voice Activity
+        - Use Embedded Activities
+        - Use Soundboard
 - Copy the generated URL, paste it in your browser, and add the application to your server!
 
 ### 2. Configure env variables for the new bot
