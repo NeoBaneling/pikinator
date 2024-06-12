@@ -1,6 +1,6 @@
 name: Sync commands for a Discord server
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       guildId:
         description: 'The id of the target server'
