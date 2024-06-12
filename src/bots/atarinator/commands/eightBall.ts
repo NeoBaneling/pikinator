@@ -1,4 +1,4 @@
-import { getRandOption } from "../../../common/choose-random";
+import { getRandOption } from "../../../common/random";
 import { CommandInteraction, SlashCommandBuilder, SlashCommandStringOption } from "discord.js";
 
 export const data = new SlashCommandBuilder()

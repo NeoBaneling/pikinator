@@ -1,10 +1,10 @@
-import { Client, Events, GatewayIntentBits } from 'discord.js';
+import { Client, Events } from 'discord.js';
 import { bots } from './bots';
-import { deployCommands } from './util/deploy-commands';
+import { deployCommands } from './util/deployCommands';
 import { Inator } from './common/types';
 
-const loadClients = async () => {
-    Promise.all(bots.map(({ commands, config, onMessage }: Inator) => {
+export const loadClients = async (inators: Inator[]) => {
+    await Promise.all(inators.map(({ commands, config, onMessage }: Inator) => {
         const client = new Client({
             intents: config.intents
         })
@@ -52,4 +52,4 @@ const loadClients = async () => {
     }))
 }
 
-loadClients();
+loadClients(bots);
