@@ -44,7 +44,7 @@ describe('loadClients', () => {
         }))
 
         commands = { [`${faker.lorem.word()}`]: { execute: mockExecute } };
-        config = { id: faker.string.alphanumeric(), intents: [], name: faker.lorem.word(), token: faker.string.alphanumeric() }
+        config = { id: faker.string.alphanumeric(3), intents: [], name: faker.lorem.word(), token: faker.string.alphanumeric() }
         guildId = faker.string.numeric()
     })
     afterEach(() => {
@@ -180,7 +180,7 @@ describe('loadClients', () => {
             })
             describe('and the message author does not match the client', () => {
                 beforeEach(async () => {
-                    message = { author: { id: faker.string.alphanumeric() }}
+                    message = { author: { id: faker.string.alphanumeric(5) }}
                     await events[Events.MessageCreate](message)
                 })
                 it('then onMessage is triggered', () => {

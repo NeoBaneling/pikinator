@@ -1,0 +1,21 @@
+name: Sync commands for a Discord server
+on:
+  workflow_call:
+    inputs:
+      guildId:
+        description: 'The id of the target server'
+        required: false
+        type: string
+
+jobs:
+  sync-commands:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: v20.14.0
+      - run: npm install
+      - name: Sync
+        run: npm run sync -- ${{ inputs.guildId }}
