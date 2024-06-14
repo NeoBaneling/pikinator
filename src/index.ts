@@ -52,6 +52,10 @@ export const loadClients = async (inators: Inator[]) => {
         return;
       });
 
+      client.on(Events.ThreadCreate, async (thread) => {
+        await thread.join();
+      });
+
       return client.login(config.token);
     }),
   );
