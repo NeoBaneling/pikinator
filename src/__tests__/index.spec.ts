@@ -201,5 +201,17 @@ describe('loadClients', () => {
         });
       });
     });
+    describe('when a ThreadCreate event is triggered', () => {
+      const mockJoin = jest.fn();
+
+      let thread: any;
+      beforeEach(async () => {
+        thread = { join: mockJoin };
+        await events[Events.ThreadCreate](thread);
+      });
+      it('then the client joins the thread', () => {
+        expect(mockJoin).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 });

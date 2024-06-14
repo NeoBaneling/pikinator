@@ -1,6 +1,6 @@
 import { getConfig } from '../..//util/getConfig';
 import { Inator } from '../../common/types';
-import { eightBall } from './commands';
+import { eightBall, start } from './commands';
 
-const bot: Inator = { commands: { ['8ball']: eightBall }, config: getConfig('atarinator') };
+const bot: Inator = { commands: { ['8ball']: eightBall, start }, config: getConfig('atarinator') };
 export default bot;

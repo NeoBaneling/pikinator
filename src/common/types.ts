@@ -5,6 +5,7 @@ import {
   Message,
   SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
+  ThreadChannel,
 } from 'discord.js';
 
 export interface Config {
