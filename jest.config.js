@@ -7,13 +7,8 @@ module.exports = {
       branches: 75,
       functions: 75,
       lines: 80,
-      statements: 80
-    }
+      statements: 80,
+    },
   },
-  collectCoverageFrom: [
-    '**/*.ts',
-    '!**/node_modules/**',
-    '!**/syncCommands.ts',
-    '!**/bots/index.ts'
-  ]
+  collectCoverageFrom: ['**/*.ts', '!**/node_modules/**', '!**/syncCommands.ts', '!**/bots/index.ts'],
 };
