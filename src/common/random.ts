@@ -1,3 +1,5 @@
+import { MsgFn, MsgFmtOptions } from './types';
+
 const randInt = (max: number) => Math.floor(Math.random() * max);
 
 /**
@@ -10,12 +12,13 @@ export const dieHit = (target: number) => randInt(target) === target - 1;
 /**
  * Selects a true random option from a given list
  * @param options the list to select from. Each option can have a weight property, which affects the likelihood that it will be selected.
+ * @param key (optional) returns the key of the selected object rather than the object itself
  * @returns a true random option from the list, with weights omitted.
  * @example
  *
  */
-export const getRandOption = (options: any[]) => {
-  return options.reduce((opts, currOption) => {
+export const getRandOption = (options: any[], key?: string) => {
+  const weightedOptions = options.reduce((opts, currOption) => {
     let trueWeight = 1;
     let trueOption = currOption;
 
@@ -27,7 +30,9 @@ export const getRandOption = (options: any[]) => {
 
     for (let i = 0; i < trueWeight; i++) opts.push(trueOption);
     return opts;
-  }, [])[randInt(options.length)];
+  }, []);
+  const option = weightedOptions[randInt(weightedOptions.length)];
+  return option && key && Object.keys(option).includes(key) ? option[key] : option;
 };
 
 /**
@@ -37,8 +42,8 @@ export const getRandOption = (options: any[]) => {
  * @param forceOption (optional) whether the function *must* select an option. Defaults to false
  * @returns the modified message
  */
-export const applyRandomFmt = (options: ((message: string) => string)[], message: string, forceOption = false) => {
-  const option = getRandOption(forceOption ? options : [...options, null]);
+export const applyRandomFmt = (options: MsgFmtOptions, message: string, forceOption = false) => {
+  const option = getRandOption(forceOption ? options : [...options, null], 'fmt');
   if (option) {
     return option(message);
   }

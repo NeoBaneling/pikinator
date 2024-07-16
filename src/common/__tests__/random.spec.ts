@@ -25,12 +25,20 @@ describe('getRandOption', () => {
   describe('when options have weight', () => {
     beforeEach(() => {
       options = [];
-      for (let i = 0; i < 1; i++) {
+      for (let i = 0; i < 10; i++) {
         options.push({ str: faker.string.numeric(), weight: faker.number.int({ min: 1, max: 10 }) });
       }
     });
     it('then the returned option does not have a weight', () => {
       expect(getRandOption(options)).not.toHaveProperty('weight');
+    });
+  });
+  describe('when a key is provided', () => {
+    beforeEach(() => {
+      options = [{ str: faker.string.numeric(), weight: faker.number.int({ min: 1, max: 10 }) }];
+    });
+    it('then the returned option is the key value', () => {
+      expect(getRandOption(options, 'str')).toBe(options[0].str);
     });
   });
 });

@@ -27,3 +27,12 @@ export interface Inator {
   config: Config;
   onMessage?: (message: Message) => Promise<Message | null>;
 }
+
+export type MsgFn = (message: string) => string;
+
+type MsgOption = {
+  fmt: MsgFn;
+  weight: number;
+};
+
+export type MsgFmtOptions = (MsgFn | MsgOption)[];
