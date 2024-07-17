@@ -108,7 +108,7 @@ const onMessage = async (message: Message) => {
 };
 
 export default new Inator()
-    .setName('<inator-name'>)
+    .setName('<inator-name>')
     .setMessageHandler(onMessage);
 ```
 - In `src/bots/index.ts` include your new bot in the list of bots
