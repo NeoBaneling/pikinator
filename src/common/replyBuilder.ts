@@ -4,14 +4,16 @@ import { dieHit } from './random';
 type ReplyCallback = (message: Message) => string | null;
 
 export class ReplyBuilder {
+  callback: ReplyCallback;
   FREQ: number;
   freq: number;
-  callback: ReplyCallback;
+  THRESHOLD: number;
 
   constructor() {
+    this.callback = () => null;
     this.FREQ = 0;
     this.freq = 0;
-    this.callback = () => null;
+    this.THRESHOLD = 0;
   }
 
   /**
@@ -33,8 +35,28 @@ export class ReplyBuilder {
     return this;
   }
 
+  /**
+   * Sets the threshold for the reply
+   * NOTE: If the threshold is greater than the frequency, then the threshold is set to 0
+   * @param threshold The minimum number of messages (exclusive) that must pass before a reply can be set
+   * @example // Threshold limits the minimum messages before a reply
+   * new ReplyBuilder().setFrequency(6).setThreshold(2);
+   * // > rub          ❌
+   * // > some         ❌
+   * // > bacon on it  ✅
+   *
+   * @example // Threshold is overwritten when it exceeds frequency
+   * const reply = new ReplyBuilder().setFrequency(2).setThreshold(5);
+   * console.log(reply.THRESHOLD);
+   * // > 0
+   */
+  setThreshold(threshold: number) {
+    this.THRESHOLD = threshold <= this.FREQ ? threshold : 0;
+    return this;
+  }
+
   onMessage(message: Message): string | null {
-    if (dieHit(this.freq)) {
+    if (this.THRESHOLD <= this.FREQ - this.freq && dieHit(this.freq)) {
       this.freq = this.FREQ;
       return this.callback(message);
     } else {

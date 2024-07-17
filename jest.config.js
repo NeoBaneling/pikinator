@@ -10,5 +10,11 @@ module.exports = {
       statements: 80,
     },
   },
-  collectCoverageFrom: ['**/*.ts', '!**/node_modules/**', '!**/syncCommands.ts', '!**/bots/index.ts'],
+  collectCoverageFrom: [
+    '**/*.ts',
+    '!**/node_modules/**',
+    '!**/syncCommands.ts',
+    '!**/bots/index.ts',
+    '!**/bots/*/index.ts',
+  ],
 };

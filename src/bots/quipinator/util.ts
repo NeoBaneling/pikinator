@@ -18,6 +18,16 @@ const quipFmt = (options: { str: string; weight: number }[]) =>
     ),
   )}`;
 
+const randPunc = () =>
+  getRandOption(
+    [
+      { str: '', weight: 3 },
+      { str: '.', weight: 1 },
+      { str: '!', weight: 1 },
+    ],
+    'str',
+  );
+
 export const yourMom = () => {
   return `${quipFmt([
     { str: 'your', weight: 14 },
@@ -29,12 +39,19 @@ export const yourMom = () => {
     { str: 'mother', weight: 5 },
     { str: 'mommy', weight: 4 },
     { str: `mom're`, weight: 1 },
-  ])}${getRandOption(
+  ])}${randPunc()}`;
+};
+
+export const sheSaid = () => {
+  return `${getRandOption(
     [
-      { str: '', weight: 3 },
-      { str: '.', weight: 1 },
-      { str: '!', weight: 1 },
+      { str: `that's`, weight: 3 },
+      { str: 'thats', weight: 1 },
     ],
     'str',
-  )}`;
+  )} what ${quipFmt([
+    { str: 'she', weight: 11 },
+    { str: 'he', weight: 7 },
+    { str: 'they', weight: 2 },
+  ])} said${randPunc()}`;
 };
