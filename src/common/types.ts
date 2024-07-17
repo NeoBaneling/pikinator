@@ -5,7 +5,6 @@ import {
   Message,
   SlashCommandBuilder,
   SlashCommandOptionsOnlyBuilder,
-  ThreadChannel,
 } from 'discord.js';
 
 export interface Config {
@@ -21,12 +20,6 @@ export interface SlashCommand {
 }
 
 export type SlashCommands = Record<string, SlashCommand>;
-
-export interface Inator {
-  commands: SlashCommands;
-  config: Config;
-  onMessage?: (message: Message) => Promise<Message | null>;
-}
 
 export type MsgFn = (message: string) => string;
 

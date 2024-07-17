@@ -1,5 +1,5 @@
 import { bots } from '../bots';
-import { Inator } from '../common/types';
+import { Inator } from '../common/inator';
 import { deployCommands } from './deployCommands';
 
 export const syncCommands = async (inators: Inator[], guildId: string | undefined) => {

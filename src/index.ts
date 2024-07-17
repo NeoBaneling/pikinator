@@ -1,17 +1,17 @@
 import { Client, Events } from 'discord.js';
 import { bots } from './bots';
 import { deployCommands } from './util/deployCommands';
-import { Inator } from './common/types';
+import { Inator } from './common/inator';
 
 export const loadClients = async (inators: Inator[]) => {
   await Promise.all(
-    inators.map(({ commands, config, onMessage }: Inator) => {
+    inators.map(({ commands, config, name, onMessage, randomReplies }: Inator) => {
       const client = new Client({
         intents: config.intents,
       });
 
       client.once(Events.ClientReady, async () => {
-        console.log(`[${config.name}] is ready!`);
+        console.log(`[${name}] is ready!`);
       });
 
       client.on(Events.GuildCreate, async (guild) => {
@@ -26,7 +26,7 @@ export const loadClients = async (inators: Inator[]) => {
         const { commandName } = interaction;
 
         if (!commands[commandName as keyof typeof commands]) {
-          console.error(`[${config.name}] No command matching ${interaction.commandName} was found.`);
+          console.error(`[${name}] No command matching ${interaction.commandName} was found.`);
           return;
         }
 
@@ -46,9 +46,24 @@ export const loadClients = async (inators: Inator[]) => {
       });
 
       client.on(Events.MessageCreate, async (message) => {
-        if (onMessage && message.author.id !== config.id) {
-          await onMessage(message);
+        // I can't think of a single situation where we'd want to respond to ourselves
+        if (message.author.id === config.id) return;
+
+        // Attempt to send a message in response to a message
+        if (onMessage) {
+          const msg = await onMessage(message);
+          if (msg) return msg;
         }
+
+        // When no message exists, attempt to provide a random reply
+        const randReply = randomReplies?.reduce(
+          (selectedReply, reply) => {
+            return selectedReply || reply.onMessage(message);
+          },
+          null as string | null,
+        );
+        if (randReply) await message.reply(randReply);
+
         return;
       });
 
