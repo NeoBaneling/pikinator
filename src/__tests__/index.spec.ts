@@ -22,6 +22,7 @@ describe('loadClients', () => {
   const mockOnce = jest.fn();
   const mockOn = jest.fn();
   const mockExecute = jest.fn();
+  const mockReplyMessage = jest.fn();
   const events: Record<string, any> = {};
   const logSpy = jest.spyOn(global.console, 'log');
   const errorSpy = jest.spyOn(global.console, 'error');
@@ -29,6 +30,7 @@ describe('loadClients', () => {
   let commands: Record<string, any>;
   let config: any;
   let guildId: string;
+  let randomReplies: any[];
 
   beforeEach(() => {
     (Client as unknown as jest.Mock).mockImplementation(() => ({
@@ -51,6 +53,7 @@ describe('loadClients', () => {
       token: faker.string.alphanumeric(),
     };
     guildId = faker.string.numeric();
+    randomReplies = [{ onMessage: jest.fn().mockReturnValue(null) }, { onMessage: mockReplyMessage }];
   });
   afterEach(() => {
     mockLogin.mockClear();
@@ -65,7 +68,9 @@ describe('loadClients', () => {
         {
           commands,
           config,
+          name: config.name,
           onMessage: onMessageTrigger,
+          randomReplies,
         } as any,
       ]);
     });
@@ -198,6 +203,9 @@ describe('loadClients', () => {
         });
         it('then onMessage is triggered', () => {
           expect(onMessageTrigger).toHaveBeenCalledWith(message);
+        });
+        it('then the random reply onMessage is triggered', () => {
+          expect(mockReplyMessage).toHaveBeenCalledWith(message);
         });
       });
     });

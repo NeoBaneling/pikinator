@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { Inator } from '../../common/types';
+import { Inator } from '../../common/inator';
 import { getConfig } from '../../util/getConfig';
 import { ping } from './commands';
 
@@ -10,5 +10,4 @@ const onMessage = async (message: Message) => {
   return null;
 };
 
-const bot: Inator = { commands: { ping }, config: getConfig('pikinator'), onMessage };
-export default bot;
+export default new Inator().setName('pikinator').setCommands({ ping }).setMessageHandler(onMessage);
