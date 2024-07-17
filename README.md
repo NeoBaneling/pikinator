@@ -107,8 +107,9 @@ const onMessage = async (message: Message) => {
   return null;
 };
 
-const bot: Inator = { commands: { }, config: getConfig('<inator-name>'), onMessage };
-export default bot;
+export default new Inator()
+    .setName('<inator-name'>)
+    .setMessageHandler(onMessage);
 ```
 - In `src/bots/index.ts` include your new bot in the list of bots
 - If your bot needs commands, add a `src/bots/<inator-name>/commands/index.ts` file to bulk export all of the commands
