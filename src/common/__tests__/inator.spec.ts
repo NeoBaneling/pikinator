@@ -23,7 +23,7 @@ describe('Inator', () => {
       expect(inator.config).toEqual({});
       expect(inator.name).toBe('');
       expect(inator.onMessage).toBeUndefined();
-      expect(inator.randomReplies).toEqual([]);
+      expect(inator.getRandomReply('' as any)).toBe(null);
     });
     describe('when setCommands is called', () => {
       let commands: any;
@@ -57,13 +57,18 @@ describe('Inator', () => {
       });
     });
     describe('when setRandomReplies is called', () => {
+      let replyRes: string;
       let randomReplies: any[];
       beforeAll(() => {
-        randomReplies = [{ FREQ: faker.number.int({ min: 15 }) }, { FREQ: faker.number.int({ max: 14 }) }];
+        replyRes = faker.lorem.word();
+        randomReplies = [
+          { FREQ: faker.number.int({ min: 15 }), onMessage: jest.fn() },
+          { FREQ: faker.number.int({ max: 14 }), onMessage: jest.fn().mockReturnValue(replyRes) },
+        ];
         inator.setRandomReplies(randomReplies);
       });
       it('then it sets and sorts setRandomReplies', () => {
-        expect(inator.randomReplies).toBe(randomReplies.sort((a, b) => a.FREQ - b.FREQ));
+        expect(inator.getRandomReply('' as any)).toBe(replyRes);
       });
     });
   });

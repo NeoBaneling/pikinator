@@ -10,7 +10,7 @@ export class Inator {
   config: Config;
   name: string;
   onMessage?: MessageHandler;
-  randomReplies: ReplyBuilder[];
+  protected randomReplies: ReplyBuilder[];
 
   constructor() {
     this.commands = {} as SlashCommands;
@@ -54,7 +54,28 @@ export class Inator {
    * @param randomReplies The array of random replies
    */
   setRandomReplies(randomReplies: ReplyBuilder[]) {
-    this.randomReplies = randomReplies.sort((a, b) => a.FREQ - b.FREQ);
+    this.randomReplies = randomReplies;
+    this.sortRandomReplies();
     return this;
+  }
+
+  /**
+   * Iterates over all random replies and selects a lucky reply, then re-sorts all random replies based on their new frequencies
+   * @param message The incoming message to be replied to
+   * @returns a random reply, or null if no reply was selected
+   */
+  getRandomReply(message: Message): string | null {
+    const reply = this.randomReplies.reduce(
+      (selectedReply, reply) => selectedReply || reply.onMessage(message),
+      null as string | null,
+    );
+
+    this.sortRandomReplies();
+
+    return reply;
+  }
+
+  protected sortRandomReplies() {
+    this.randomReplies = this.randomReplies.sort((a, b) => a.freq - b.freq);
   }
 }
