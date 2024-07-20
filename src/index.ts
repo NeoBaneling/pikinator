@@ -5,8 +5,7 @@ import { Inator } from './common/inator';
 
 export const loadClients = async (inators: Inator[]) => {
   await Promise.all(
-    inators.map((inator: Inator) => {
-      const { commands, config, name, onMessage } = inator;
+    inators.map(({ commands, config, getRandomReply, name, onMessage }: Inator) => {
       const client = new Client({
         intents: config.intents,
       });
@@ -57,7 +56,7 @@ export const loadClients = async (inators: Inator[]) => {
         }
 
         // When no message exists, attempt to provide a random reply
-        const randReply = inator.getRandomReply(message);
+        const randReply = getRandomReply(message);
         if (randReply) await message.reply(randReply);
 
         return;
